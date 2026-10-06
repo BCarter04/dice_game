@@ -10,18 +10,12 @@
     </head>
     <body>
         <p class="reminder">
-            Reminder: this is a long-lost update to a game from 2016. It was not made in 2023. The 2016 table was uploaded to this repo on 18 March 2023 and left unfinished: two dice and a winning-score box were on the page, and the script still rolled one die to 100. Finished on 6 October 2026. Same table. No network.
+            Reminder: this is a long-lost update to a game from 2016. It was not made in 2023. The 2016 table was uploaded on 18 March 2023 and left unfinished. Finished on 6 October 2026. Same table. No network.
         </p>
 
         <div class="layout">
-            <div class="wrapper clearfix">
-                <header class="board-title">
-                    <p class="eyebrow">Pig, 2016</p>
-                    <h1>Holdfast</h1>
-                    <p class="race" id="race">Race to 100</p>
-                </header>
-
-                <div class="player-0-panel active">
+            <div class="wrapper">
+                <section class="seat player-0-panel active">
                     <input class="name-input" id="name-0" value="North" maxlength="16" aria-label="Left seat name">
                     <p class="match" id="wins-0">0 wins</p>
                     <div class="player-score" id="score-0">0</div>
@@ -30,9 +24,30 @@
                         <div class="player-current-label">At risk</div>
                         <div class="player-current-score" id="current-0">0</div>
                     </div>
-                </div>
+                </section>
 
-                <div class="player-1-panel">
+                <section class="rail">
+                    <p class="eyebrow">Pig, 2016</p>
+                    <h1>Holdfast</h1>
+                    <p class="race" id="race">Race to 100</p>
+                    <div class="dice-row">
+                        <img src="dice-5.png" alt="First die" class="dice" id="dice-1">
+                        <img src="dice-5.png" alt="Second die" class="dice" id="dice-2">
+                    </div>
+                    <button class="btn-roll" type="button"><i class="ion-ios-loop"></i>Roll</button>
+                    <button class="btn-hold" type="button"><i class="ion-ios-download-outline"></i>Hold</button>
+                    <button class="btn-new" type="button"><i class="ion-ios-plus-outline"></i>New race</button>
+                    <label class="score-label">Race length
+                        <input type="number" min="20" class="final-score" value="100" aria-label="Race length, read when a new race starts">
+                    </label>
+                    <p class="message" id="message">Race to 100. North rolls first.</p>
+                    <p class="rules">A 1 busts the round. Double 6 wipes the bank. Hold to keep it.</p>
+                    <ol class="tape" id="tape" aria-label="This race"></ol>
+                    <button class="btn-notes" id="btn-notes" type="button">Notes</button>
+                    <button class="btn-clear" id="btn-clear" type="button">Clear match</button>
+                </section>
+
+                <section class="seat player-1-panel">
                     <input class="name-input" id="name-1" value="South" maxlength="16" aria-label="Right seat name">
                     <p class="match" id="wins-1">0 wins</p>
                     <div class="player-score" id="score-1">0</div>
@@ -41,46 +56,22 @@
                         <div class="player-current-label">At risk</div>
                         <div class="player-current-score" id="current-1">0</div>
                     </div>
-                </div>
-
-                <button class="btn-new"><i class="ion-ios-plus-outline"></i>New race</button>
-                <button class="btn-roll"><i class="ion-ios-loop"></i>Roll</button>
-                <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
-                <button class="btn-notes" id="btn-notes" type="button"><i class="ion-ios-paper-outline"></i>Notes</button>
-
-                <input type="number" min="20" placeholder="Race to" class="final-score" value="100" aria-label="Race length, read when a new race starts">
-                <p class="message" id="message">First to 100. Space rolls, H holds, N starts a race.</p>
-                <p class="rules">A 1 busts the round. Double 6 wipes the bank. Hold to keep it.</p>
-                <ol class="tape" id="tape" aria-label="This race"></ol>
-
-                <img src="dice-5.png" alt="First die" class="dice" id="dice-1">
-                <img src="dice-5.png" alt="Second die" class="dice" id="dice-2">
+                </section>
             </div>
 
-            <aside class="notes" id="notes">
+            <aside class="notes is-hidden" id="notes">
                 <h2>How Holdfast works</h2>
                 <p class="notes-kicker">A 2016 Pig table, uploaded in 2023, finished in 2026.</p>
-
                 <h3>The name</h3>
-                <p>Holdfast is the 2026 name. The game is still Pig: roll, risk the round, hold to bank it. Seats start as North and South. Type a name. It is kept on this browser.</p>
-
+                <p>Holdfast is the 2026 name. The game is still Pig: roll, risk the round, hold to bank it. Seats start as North and South. A typed name is kept on this browser.</p>
                 <h3>Two scores</h3>
-                <p>The big number is the bank. The red box is the round, still at risk. The bar is the bank against the race length. Wins under the name are the match, not this race.</p>
-
+                <p>The big number is the bank. The red box is the round, still at risk. The bar is the bank against the race length. Wins under the name are the match, not this race. Clear match zeros that count only.</p>
                 <h3>A turn</h3>
-                <p>The grey side is the seat that may roll. Roll as often as you like, then hold. A bust, a wipe, or a hold passes the turn. The tape under the board records the race.</p>
-
-                <h3>Roll, bust, wipe</h3>
-                <p>Both dice count. A 4 and a 5 add 9. A 1 on either die loses the round only. Both sixes set that bank to 0. A 1 is checked first, so a 1 and a 6 is a bust.</p>
-
-                <h3>Hold and the race</h3>
-                <p>Hold banks the round. Holding on 0 does nothing. You win only on banked points, when the bank reaches the race length. The race length is read when New race is pressed. Blank or under 20 falls back to 100.</p>
-
+                <p>The grey seat may roll. Both dice count. A 1 on either die loses the round only. Both sixes set that bank to 0. Hold banks the round. You win only on banked points.</p>
                 <h3>Keys</h3>
-                <p>Space rolls. H holds. N starts a race. ? hides these notes. Typing in a name or the race box does not fire those keys.</p>
+                <p>Space rolls. H holds. N starts a race. ? shows these notes. Typing in a name or the race box does not fire those keys.</p>
             </aside>
         </div>
-
         <script src="app.js"></script>
     </body>
 </html>
