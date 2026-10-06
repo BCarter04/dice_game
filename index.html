@@ -6,40 +6,82 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,600" rel="stylesheet" type="text/css">
         <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
         <link type="text/css" rel="stylesheet" href="style.css">
-        <title>Pig Game</title>
+        <title>Pig Game — long-lost update</title>
     </head>
     <body>
-        <div class="wrapper clearfix">
-            <div class="player-0-panel active">
-                <div class="player-name" id="name-0">Warrior 1</div>
-                <div class="player-score" id="score-0">0</div>
-                <div class="progress"><div class="progress-bar" id="progress-0"></div></div>
-                <div class="player-current-box">
-                    <div class="player-current-label">Current</div>
-                    <div class="player-current-score" id="current-0">0</div>
+        <p class="reminder">
+            Reminder: this is a long-lost update. The game was started on 18 March 2023 and left unfinished for more than three years. The page already had two dice and a winning-score box. The script still rolled one die and always won at 100. Picked back up on 6 October 2026.
+        </p>
+
+        <div class="layout">
+            <div class="wrapper clearfix">
+                <div class="player-0-panel active">
+                    <div class="player-name" id="name-0">Warrior 1</div>
+                    <div class="player-score" id="score-0">0</div>
+                    <div class="progress" title="Banked score against the winning score"><div class="progress-bar" id="progress-0"></div></div>
+                    <div class="player-current-box">
+                        <div class="player-current-label">Current</div>
+                        <div class="player-current-score" id="current-0">0</div>
+                    </div>
                 </div>
+
+                <div class="player-1-panel">
+                    <div class="player-name" id="name-1">Warrior 2</div>
+                    <div class="player-score" id="score-1">0</div>
+                    <div class="progress" title="Banked score against the winning score"><div class="progress-bar" id="progress-1"></div></div>
+                    <div class="player-current-box">
+                        <div class="player-current-label">Current</div>
+                        <div class="player-current-score" id="current-1">0</div>
+                    </div>
+                </div>
+
+                <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
+                <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
+                <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
+                <button class="btn-notes" id="btn-notes" type="button"><i class="ion-ios-paper-outline"></i>Notes</button>
+
+                <input type="number" min="20" placeholder="Winning score" class="final-score" value="100" aria-label="Winning score, read when a new game starts">
+                <p class="message" id="message">First to 100. Space rolls, H holds, N starts over.</p>
+                <p class="rules">A 1 busts the round. Double 6 wipes the bank. Hold to keep the round.</p>
+
+                <img src="dice-5.png" alt="First die" class="dice" id="dice-1">
+                <img src="dice-5.png" alt="Second die" class="dice" id="dice-2">
             </div>
 
-            <div class="player-1-panel">
-                <div class="player-name" id="name-1">Warrior 2</div>
-                <div class="player-score" id="score-1">0</div>
-                <div class="progress"><div class="progress-bar" id="progress-1"></div></div>
-                <div class="player-current-box">
-                    <div class="player-current-label">Current</div>
-                    <div class="player-current-score" id="current-1">0</div>
-                </div>
-            </div>
+            <aside class="notes" id="notes">
+                <h2>How this game works</h2>
+                <p class="notes-kicker">Same table. Two warriors. No network.</p>
 
-            <button class="btn-new"><i class="ion-ios-plus-outline"></i>New game</button>
-            <button class="btn-roll"><i class="ion-ios-loop"></i>Roll dice</button>
-            <button class="btn-hold"><i class="ion-ios-download-outline"></i>Hold</button>
+                <h3>Two different scores</h3>
+                <p>The big red number is the bank. It stays until you win, or until a double 6 wipes it. The small number in the red box is the round. It is not safe until you hold.</p>
 
-            <input type="number" min="20" placeholder="Winning score" class="final-score" value="100">
-            <p class="message" id="message">First to 100. Space rolls, H holds, N starts over.</p>
-            <p class="rules">A 1 busts the round. Double 6 wipes the bank. Hold to keep the round.</p>
+                <h3>A turn</h3>
+                <p>The grey panel and the red dot mark whose turn it is. That warrior may roll as many times as they like, then hold. After a bust, a wipe, or a hold, the other warrior plays.</p>
 
-            <img src="dice-5.png" alt="Dice" class="dice" id="dice-1">
-            <img src="dice-5.png" alt="Dice" class="dice" id="dice-2">
+                <h3>Roll</h3>
+                <p>Both dice are rolled. Their faces are shown and added to the round. A 4 and a 5 add 9. The dice hide when the turn ends, so the next warrior starts clean.</p>
+
+                <h3>A 1</h3>
+                <p>If either die is a 1, the round is lost. The bank is untouched. The turn passes. One 1 is enough. The other die does not save you.</p>
+
+                <h3>Double 6</h3>
+                <p>If both dice are 6, the bank is set to 0 and the turn passes. The round is lost too. This is the old “two sixes” idea, finished for the two dice that were already on the page.</p>
+
+                <h3>Hold</h3>
+                <p>Hold adds the round to the bank, clears the round, and passes the turn. Holding on 0 does nothing. You have to roll first.</p>
+
+                <h3>Winning</h3>
+                <p>After a hold, if the bank is at least the winning score, that warrior wins. The name becomes Winner, the panel stays highlighted, and rolls and holds stop until New game.</p>
+
+                <h3>Winning score box</h3>
+                <p>Type a number, then press New game. It is read only then, so changing it mid-game cannot move the finish line. Blank or anything under 20 falls back to 100.</p>
+
+                <h3>Keys</h3>
+                <p>Space rolls. H holds. N starts a new game. Typing in the score box does not trigger those keys.</p>
+
+                <h3>What the code does</h3>
+                <p><code>app.js</code> keeps the bank in <code>scores</code>, the round in <code>roundScore</code>, and whose turn it is in <code>activePlayer</code> (0 or 1). <code>gamePlaying</code> is false after a win so the buttons ignore clicks. <code>init</code> resets all of that. The pictures <code>dice-1.png</code> through <code>dice-6.png</code> are the faces. Full notes are in <code>NOTES.md</code>.</p>
+            </aside>
         </div>
 
         <script src="app.js"></script>
