@@ -1,56 +1,43 @@
 # Notes
 
-Reminder: this is a long-lost update to a game done years ago.
+Reminder: this is a long-lost update to a game from 2016. It was not made in 2023.
 
-Started 18 March 2023. One commit, then nothing, until 6 October 2026. The HTML and CSS had already been pointed at a second die and a winning-score field. The script had not caught up. These notes are the map of the finished same-table game.
+The table is Pig, written in 2016. It was uploaded to this repo on 18 March 2023 with the second die and the winning-score box already in the page, and with a script that still rolled one die to 100. It sat there until 6 October 2026. This update finishes that page and names it Holdfast. Same table. No network.
 
-## The idea
+## Why the new name
 
-Pig is a push-your-luck dice game. You may keep rolling, but a bad face throws away what you have not banked. Two people play on one screen. There is no second device and no server.
+Pig is the rules. Holdfast is the decision: bank the round, or roll again and risk it. The 2016 faces and background stay. Seats start as North and South so the board is not stuck on Warrior 1 and Warrior 2. A typed name is saved in `localStorage` under `holdfast-2016`, with the match wins.
 
 ## The two numbers
 
-Bank, `#score-0` and `#score-1`. Kept between turns. This is the number that wins the game.
+Bank, `#score-0` and `#score-1`. Kept between turns. This is the race.
 
-Round, `#current-0` and `#current-1`. Only exists during the current turn. A bust or a turn change sets it back to 0. Hold is the only way it becomes bank.
+Round, `#current-0` and `#current-1`, labelled "At risk". Lost on a 1, lost on a double 6, banked only by Hold.
 
-The bar under the bank is the bank divided by the winning score, never more than the full width.
+The bar is the bank divided by the race length. The line under the name is match wins, not this race. The tape is the last six events of this race.
 
-## How a roll is made
+## Roll
 
-`Math.random()` returns a number from 0 up to but not including 1. Multiply by 6, drop the fraction, add 1. That is a face from 1 to 6. It is done twice, once per die.
+`Math.random()` is 0 up to but not including 1. Times 6, floored, plus 1, is a face from 1 to 6. Done twice. The 2016 files `dice-1.png` through `dice-6.png` are the faces.
 
-The face is shown by setting the image `src` to `dice-1.png` through `dice-6.png`. Those files were already in the repo. A short CSS shake replays by removing and re-adding the `rolling` class. Reading `offsetWidth` between those steps forces the browser to restart the animation.
+Order:
 
-## Why the checks are in this order
-
-1. Either die is 1: lose the round, keep the bank, next player. A 1 and a 6 is still a bust.
-2. Both dice are 6: bank becomes 0, next player. This is the two-sixes rule, written for the two dice the page already had, instead of “the last single die was also a 6”.
-3. Otherwise add both faces to the round. The same player rolls again if they want.
+1. Either die is 1: lose the round, keep the bank, flash the seat, pass the turn. A 1 and a 6 is a bust.
+2. Both dice are 6: bank becomes 0, flash, pass the turn.
+3. Otherwise add both faces. The same seat may roll again.
 
 ## Hold and win
 
-Hold refuses a round of 0, so a player cannot pass an empty turn by accident and call it a bank.
+Hold refuses a round of 0. The win test runs only after a hold, so points still at risk do not win. A win adds one to that seat's match count, marks the panel, and stops roll and hold until New race. The name stays in the box. It is not replaced with the word Winner.
 
-The win test runs only after a hold. Points sitting in the round do not win. That matches the original rule: first to the target on the global score.
+## New race
 
-On a win the name is replaced with Winner, the dice hide, `gamePlaying` becomes false, and the panel gets the `winner` class. Roll and hold check that flag and return immediately.
+`init` zeros the banks and the tape, gives the first roll to the left seat, and reads the race length. Names and wins are loaded, not cleared. The race length is not read on hold, so editing the box mid-race cannot move the finish line.
 
-## New game
+## What was already in the 2016 page
 
-`init` runs on load and on the New game button. It zeros both banks and both rounds, gives the turn to warrior 1, shows the original names, and reads the winning-score input. Reading it here, not on every hold, means editing the box during a game cannot change the target underneath the players.
+Two panels, two dice images, a winning-score field, bust on 1, hold to bank, first to 100. The 2023 upload did not finish the second die or the score field. This update does.
 
-## Keys
+## Left out
 
-Space is roll, H is hold, N is new game, ? toggles the notes. If the score input is focused, the handler returns so a typed number is not also a move.
-
-## What was already there in 2023
-
-- Two player panels, named Warrior 1 and Warrior 2 in the HTML. The old script reset those names to Player 1 and Player 2. The update keeps Warrior.
-- `#dice-1` and `#dice-2`, and CSS that stacked them. The old script only touched `.dice`, so the second image never updated.
-- `.final-score` input. Nothing read it.
-- Win at 100, one die, bust on 1, hold to bank. That core is unchanged.
-
-## What this update did not do
-
-No sockets, no shared link, no second browser. That was left out on purpose.
+No sockets, no shared link, no second browser.
