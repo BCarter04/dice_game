@@ -72,6 +72,7 @@ function rollDice() {
     if (dice1 === 6 && dice2 === 6) {
         scores[activePlayer] = 0;
         paintBank(activePlayer);
+        paintLead();
         mark('wipe');
         setMessage(seatName(activePlayer) + ' rolled double 6. The bank is wiped.');
         addTape(seatName(activePlayer) + ' wiped on 6 / 6');
@@ -81,6 +82,7 @@ function rollDice() {
 
     roundScore += dice1 + dice2;
     document.getElementById('current-' + activePlayer).textContent = roundScore;
+    pulseRisk(activePlayer);
     setMessage(seatName(activePlayer) + ' rolled ' + dice1 + ' and ' + dice2 + '. At risk: ' + roundScore + '.');
     addTape(seatName(activePlayer) + ' +' + (dice1 + dice2) + ' (' + dice1 + '/' + dice2 + ')');
 }
@@ -102,6 +104,8 @@ function hold() {
     var banked = roundScore;
     scores[activePlayer] += banked;
     paintBank(activePlayer);
+    pulseScore(activePlayer);
+    paintLead();
     addTape(seatName(activePlayer) + ' holds ' + banked + ', bank ' + scores[activePlayer]);
 
     if (scores[activePlayer] >= winningScore) {
@@ -109,9 +113,7 @@ function hold() {
         saveSeats();
         paintWins();
         hideDice();
-        document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
-        document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
-        gamePlaying = false;
+        declareWinner(activePlayer);
         setMessage(seatName(activePlayer) + ' holds the table at ' + scores[activePlayer] + '.');
         addTape(seatName(activePlayer) + ' wins the race');
     } else {
@@ -153,6 +155,59 @@ function paintBank(player) {
 function paintWins() {
     document.getElementById('wins-0').textContent = wins[0] + (wins[0] === 1 ? ' win' : ' wins');
     document.getElementById('wins-1').textContent = wins[1] + (wins[1] === 1 ? ' win' : ' wins');
+}
+
+function paintLead() {
+    var left = document.querySelector('.player-0-panel');
+    var right = document.querySelector('.player-1-panel');
+    left.classList.remove('leading', 'trailing');
+    right.classList.remove('leading', 'trailing');
+    var lead = document.getElementById('lead');
+    if (!gamePlaying && document.querySelector('.winner')) return;
+    if (scores[0] === scores[1]) {
+        document.getElementById('status-0').textContent = activePlayer === 0 ? 'Rolling' : 'Level';
+        document.getElementById('status-1').textContent = activePlayer === 1 ? 'Rolling' : 'Level';
+        lead.textContent = 'Level';
+        return;
+    }
+    var ahead = scores[0] > scores[1] ? 0 : 1;
+    var behind = ahead === 0 ? 1 : 0;
+    document.querySelector('.player-' + ahead + '-panel').classList.add('leading');
+    document.querySelector('.player-' + behind + '-panel').classList.add('trailing');
+    document.getElementById('status-' + ahead).textContent = 'Leading';
+    document.getElementById('status-' + behind).textContent = 'Behind';
+    if (activePlayer === ahead) document.getElementById('status-' + ahead).textContent = 'Leading, rolling';
+    if (activePlayer === behind) document.getElementById('status-' + behind).textContent = 'Behind, rolling';
+    lead.textContent = seatName(ahead) + ' leads by ' + (scores[ahead] - scores[behind]);
+}
+
+function declareWinner(player) {
+    gamePlaying = false;
+    var panel = document.querySelector('.player-' + player + '-panel');
+    var other = player === 0 ? 1 : 0;
+    panel.classList.remove('active', 'leading', 'trailing');
+    panel.classList.add('winner');
+    document.querySelector('.player-' + other + '-panel').classList.remove('active', 'leading', 'trailing');
+    document.getElementById('status-' + player).textContent = 'Won';
+    document.getElementById('status-' + other).textContent = 'Lost';
+    document.getElementById('lead').textContent = seatName(player) + ' won';
+    panel.classList.remove('win-pop');
+    void panel.offsetWidth;
+    panel.classList.add('win-pop');
+}
+
+function pulseScore(player) {
+    var el = document.getElementById('score-' + player);
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
+}
+
+function pulseRisk(player) {
+    var el = document.getElementById('current-' + player);
+    el.classList.remove('pop');
+    void el.offsetWidth;
+    el.classList.add('pop');
 }
 
 function seatName(player) {
@@ -248,11 +303,12 @@ function init() {
     document.getElementById('progress-1').style.width = '0%';
     document.getElementById('race').textContent = 'Race to ' + winningScore;
 
-    document.querySelector('.player-0-panel').classList.remove('winner');
-    document.querySelector('.player-1-panel').classList.remove('winner');
+    document.querySelector('.player-0-panel').classList.remove('winner', 'win-pop', 'leading', 'trailing');
+    document.querySelector('.player-1-panel').classList.remove('winner', 'win-pop', 'leading', 'trailing');
     document.querySelector('.player-0-panel').classList.remove('active');
     document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
+    paintLead();
 
     setMessage('Race to ' + winningScore + '. ' + seatName(0) + ' rolls first.');
 }
