@@ -57,15 +57,35 @@ body {
     position: relative;
     min-height: 100vh;
     color: #555;
+    padding: 16px 16px 32px;
+}
+
+.reminder {
+    max-width: 1280px;
+    margin: 0 auto 14px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.94);
+    color: #6b2a2a;
+    font-size: 14px;
+    line-height: 1.45;
+    text-align: center;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.layout {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: center;
+    width: min(1280px, 100%);
+    margin: 0 auto;
 }
 
 .wrapper {
-    width: 1000px;
+    width: 900px;
     max-width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: relative;
+    flex: 1 1 640px;
     background-color: #fff;
     box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
     overflow: hidden;
@@ -181,6 +201,14 @@ i {
 .btn-new { top: 45px; }
 .btn-roll { top: 403px; }
 .btn-hold { top: 467px; }
+.btn-notes {
+    top: 45px;
+    left: auto;
+    right: 24px;
+    transform: none;
+    width: auto;
+    font-size: 16px;
+}
 
 .dice {
     position: absolute;
@@ -206,8 +234,54 @@ i {
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
 
-@media (max-width: 900px) {
-    .wrapper { position: relative; top: 0; left: 0; transform: none; margin: 20px auto; }
+.notes {
+    width: 320px;
+    flex: 0 0 320px;
+    background: rgba(255, 255, 255, 0.96);
+    color: #444;
+    padding: 22px 20px 28px;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 0.3);
+    max-height: 660px;
+    overflow: auto;
+}
+
+.notes.is-hidden { display: none; }
+
+.notes h2 {
+    font-weight: 300;
+    font-size: 26px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.notes h3 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #EB4D4D;
+    margin: 16px 0 6px;
+}
+
+.notes p {
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.notes-kicker {
+    color: #888;
+    margin-bottom: 8px;
+}
+
+.notes code {
+    font-size: 12px;
+}
+
+@media (max-width: 1100px) {
+    .layout { flex-direction: column; align-items: center; }
+    .notes { width: 100%; flex-basis: auto; max-height: none; }
+    .wrapper { position: relative; top: 0; left: 0; transform: none; margin: 0 auto; }
     .player-name { font-size: 28px; }
     .player-score { font-size: 56px; }
     .player-0-panel, .player-1-panel { padding: 70px 24px 24px; height: auto; min-height: 520px; }
