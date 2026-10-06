@@ -36,8 +36,91 @@ body {
 .seat {
     padding: 36px 28px 32px;
     text-align: center;
-    transition: background-color 0.3s;
+    position: relative;
+    transition: background-color 0.35s, box-shadow 0.35s;
 }
+
+.active {
+    background: #f7f7f7;
+    animation: turn-in 0.45s ease;
+}
+
+@keyframes turn-in {
+    from { background: #fff; }
+    to { background: #f7f7f7; }
+}
+
+.status {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 4px;
+    min-height: 16px;
+}
+
+.leading {
+    box-shadow: inset 0 0 0 3px #EB4D4D;
+    animation: lead-glow 1.6s ease infinite;
+}
+
+.leading .status { color: #EB4D4D; font-weight: 600; }
+
+.trailing .status { color: #999; }
+
+@keyframes lead-glow {
+    0%, 100% { box-shadow: inset 0 0 0 3px rgba(235, 77, 77, 0.45); }
+    50% { box-shadow: inset 0 0 0 3px #EB4D4D; }
+}
+
+.lead {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #EB4D4D;
+    min-height: 16px;
+    margin-bottom: 10px;
+}
+
+.player-score.pop { animation: pop 0.4s ease; }
+.player-current-score.pop { animation: pop 0.35s ease; }
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+}
+
+.bust { animation: bust-shake 0.55s ease; }
+.wipe { animation: wipe-flash 0.7s ease; }
+
+@keyframes bust-shake {
+    0%, 100% { transform: translateX(0); background: #fde8e8; }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+}
+
+@keyframes wipe-flash {
+    0%, 100% { background: #fff; }
+    40% { background: #fff4d6; }
+}
+
+.winner {
+    background: #fff5f5;
+    animation: win-pop 0.8s ease;
+}
+
+.winner .status { color: #EB4D4D; font-weight: 600; letter-spacing: 3px; }
+.winner .name-input { color: #EB4D4D; font-weight: 300; }
+.winner .player-score { animation: pop 0.8s ease; }
+
+@keyframes win-pop {
+    0% { transform: scale(0.96); background: #fff; }
+    45% { transform: scale(1.03); background: #ffe3e3; }
+    100% { transform: scale(1); background: #fff5f5; }
+}
+
+.win-pop { animation: win-pop 0.8s ease; }
 
 .rail {
     display: flex;
@@ -69,7 +152,7 @@ body {
     letter-spacing: 1px;
     text-transform: uppercase;
     color: #EB4D4D;
-    margin-bottom: 16px;
+    margin-bottom: 4px;
 }
 
 .dice-row {
@@ -145,12 +228,7 @@ body {
     transition: width 0.25s ease;
 }
 
-.active { background: #f7f7f7; }
 .active .name-input { font-weight: 300; }
-.bust { background: #fde8e8; }
-.wipe { background: #fff4d6; }
-.winner { background: #f7f7f7; }
-.winner .name-input { color: #EB4D4D; font-weight: 300; }
 
 .player-current-box {
     background: #EB4D4D;
