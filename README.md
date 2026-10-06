@@ -1,41 +1,33 @@
-# dice_game
+# Holdfast
 
-Reminder: this is a long-lost update to a game done years ago.
+Reminder: this is a long-lost update to a game from 2016. It was not made in 2023.
 
-The repo was created on 18 March 2023 and left after one push. The page already showed two warriors, two dice images, and a winning-score box. `app.js` still rolled a single die and hard-coded a win at 100. It was picked back up on 6 October 2026. Still one device, same table. No local network and no internet play.
+The 2016 Pig table was uploaded to this repo on 18 March 2023 and left unfinished. The page already had two dice and a winning-score box. The script still rolled one die and always won at 100. It was finished on 6 October 2026 and renamed Holdfast. Same table. No network play.
 
-Open `index.html` in a browser. The dice pictures and the background are the original files.
+Open `index.html`. The dice pictures and the background are the 2016 files.
 
-## What it is
+## Direction
 
-Pig with two dice. Two players share the keyboard. Each has a bank (the big number) and a round (the small number). The round is at risk. The bank is safe until a double 6.
+Holdfast is still Pig. The name is the decision the game is about: hold, or keep rolling and risk the round. Seats start as North and South. Type over them. Names and match wins stay on this browser.
 
-## What a turn does
+## A race
 
-1. Roll. Both dice get a face from 1 to 6. The total is added to the round.
-2. A 1 on either die loses the round only. The bank stays. The other player goes.
-3. Both dice showing 6 sets that player's bank to 0 and passes the turn.
-4. Hold adds the round to the bank and passes the turn. Holding on 0 does nothing.
-5. If the bank is at least the winning score after a hold, that player wins. Rolls stop until New game.
+1. Roll both dice. The total is added to the round, the number at risk.
+2. A 1 on either die loses the round only. The bank stays.
+3. Both dice showing 6 sets that bank to 0.
+4. Hold banks the round. Holding on 0 does nothing.
+5. First bank to reach the race length wins. That win is counted under the name.
 
-The winning score is read only when New game is pressed. Default 100. Anything blank or under 20 falls back to 100. Changing the box mid-game does not move the finish line.
+The race length is read when New race is pressed. Default 100. Blank or under 20 falls back to 100.
 
-Space rolls, H holds, N starts over, ? hides the notes. Those keys do nothing while the score box is focused.
+Space rolls, H holds, N starts a race, ? hides the notes. Those keys do nothing while a name or the race box is focused.
 
-## What is on the screen
-
-- Grey panel and red dot: whose turn it is.
-- Big red number: bank.
-- Thin bar: bank against the winning score.
-- Red box: round, not banked yet.
-- Two dice: last roll. Hidden when the turn ends.
-- Red line under the buttons: what the last action did.
-- Notes panel: the same explanation as this file, shorter. The Notes button hides it.
+The tape under the board is this race only. The win count is the match.
 
 ## Files
 
 - `index.html` — board, reminder, notes.
-- `style.css` — the original board, plus the reminder and the notes column.
-- `app.js` — rules. Comments in the file walk through each function.
-- `NOTES.md` — longer notes on the rules and how the script is wired.
-- `dice-1.png` … `dice-6.png`, `back.jpg` — original art, unchanged.
+- `style.css` — 2016 board, Holdfast title, tape, bust and wipe flash.
+- `app.js` — rules, names, match tally. Comments walk through each piece.
+- `NOTES.md` — longer notes.
+- `dice-1.png` … `dice-6.png`, `back.jpg` — 2016 art, unchanged.
