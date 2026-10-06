@@ -28,6 +28,7 @@ document.querySelector('.btn-roll').addEventListener('click', rollDice);
 document.querySelector('.btn-hold').addEventListener('click', hold);
 document.querySelector('.btn-new').addEventListener('click', init);
 document.getElementById('btn-notes').addEventListener('click', toggleNotes);
+document.getElementById('btn-clear').addEventListener('click', clearMatch);
 document.getElementById('name-0').addEventListener('change', saveSeats);
 document.getElementById('name-1').addEventListener('change', saveSeats);
 
@@ -131,7 +132,7 @@ function nextPlayer() {
 
 function showDice(id, value) {
     var die = document.getElementById(id);
-    die.style.display = 'block';
+    die.classList.remove('is-hidden');
     die.src = 'dice-' + value + '.png';
     die.classList.remove('rolling');
     void die.offsetWidth;
@@ -139,8 +140,8 @@ function showDice(id, value) {
 }
 
 function hideDice() {
-    document.getElementById('dice-1').style.display = 'none';
-    document.getElementById('dice-2').style.display = 'none';
+    document.getElementById('dice-1').classList.add('is-hidden');
+    document.getElementById('dice-2').classList.add('is-hidden');
 }
 
 function paintBank(player) {
@@ -184,6 +185,13 @@ function mark(kind) {
 function clearFlash() {
     document.querySelector('.player-0-panel').classList.remove('bust', 'wipe');
     document.querySelector('.player-1-panel').classList.remove('bust', 'wipe');
+}
+
+function clearMatch() {
+    wins = [0, 0];
+    saveSeats();
+    paintWins();
+    setMessage('Match count cleared. This race is unchanged.');
 }
 
 function toggleNotes() {
